@@ -51,18 +51,19 @@ export class StatementStep extends Component<any, any> {
                     description of elements that you can use in statements.</p>
                 <div className="d-flex align-items-center control-box">
                     <label className="mr-3">Effect:</label>
-                    <InputSwitch checked={this.state.effect} onChange={(e: any) => this.setState({effect: e.value})} />
+                    <InputSwitch checked={this.state.effect} onChange={(e: any) => this.setState({effect: e.value})}/>
                 </div>
 
                 <div className="d-flex align-items-center control-box">
                     <label className="mr-3">Actions:</label>
-                    <MultiSelect options={statementActions(this.props.policy).map(x => ({label: x, value: x}))} value={this.state.actions} onChange={(e: any) => this.setState({actions: e.value})} />
+                    <MultiSelect options={statementActions(this.props.policy).map(x => ({label: x, value: x}))}
+                                 value={this.state.actions} onChange={(e: any) => this.setState({actions: e.value})}/>
                 </div>
 
                 <div className="d-flex align-items-start control-box">
                     <label className="mr-3 pt-1">Resources:</label>
                     <div className="input-wrapper">
-                        <InputText value={this.state.resource} onChange={this.handleResourceChange} />
+                        <InputText value={this.state.resource} onChange={this.handleResourceChange}/>
                         <p className="small text-warning mt-2">Tip: ARN should follow the following format: arn:aws:sqs:
                             Use a comma to separate multiple values.</p>
                     </div>
@@ -72,7 +73,8 @@ export class StatementStep extends Component<any, any> {
                         onClick={this.handleAddStatement}
                         disabled={!this.state.actions || !this.state.actions.length || !this.state.resource}/>
                 {
-                    (this.state.statements && this.state.statements.length)  ? <StatementTable statements={this.state.statements} /> : null
+                    (this.state.statements && this.state.statements.length) ?
+                        <StatementTable statements={this.state.statements}/> : null
                 }
             </section>
         );

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { PolicyTypeStep } from './PolicyTypeStep/PolicyTypeStep';
 import { StatementStep } from './StatementStep/StatementStep';
 import { GenerateStep } from './GenerateStep/GenerateStep';
-import { Policy, Statement, StatementEffect } from '../../core/models/policy';
+import { Policy, Statement } from '../../core/models/policy';
 
 export class PolicyGenerator extends Component<any, any> {
 
@@ -32,7 +32,7 @@ export class PolicyGenerator extends Component<any, any> {
                 <PolicyTypeStep onPolicyChange={(e: string) => this.setState({policy: e})}/>
                 <StatementStep policy={this.state.policy} onStatementChange={(e: Statement[]) => {
                     this.setState({statements: e});
-                }} />
+                }}/>
                 <GenerateStep statements={this.state.statements}/>
             </form>
         );
