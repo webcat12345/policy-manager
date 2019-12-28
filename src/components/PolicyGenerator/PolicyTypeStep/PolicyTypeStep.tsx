@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'primereact/dropdown';
+import { PolicyType } from '../../../core/models/policy';
 
 export class PolicyTypeStep extends Component<any, any> {
 
@@ -19,10 +20,10 @@ export class PolicyTypeStep extends Component<any, any> {
 
     render() {
         const typeOfPolicy = [
-            {label: 'Location', value: 'Location'},
-            {label: 'Properties', value: 'Properties'},
-            {label: 'Account', value: 'Account'},
-            {label: 'Users', value: 'Users'}
+            {label: 'Location', value: PolicyType.Location},
+            {label: 'Properties', value: PolicyType.Properties},
+            {label: 'Account', value: PolicyType.Account},
+            {label: 'Users', value: PolicyType.Users}
         ];
 
         return (

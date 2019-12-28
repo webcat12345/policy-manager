@@ -1,5 +1,9 @@
 .control-box {
   margin-bottom: 15px;
+  & > .p-multiselect, .p-inputtext {
+    min-width: 200px;
+  }
+
   label {
     width: 100px;
     text-align: right;
