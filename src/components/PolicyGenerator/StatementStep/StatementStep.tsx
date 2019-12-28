@@ -4,7 +4,8 @@ import { MultiSelect } from 'primereact/multiselect';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 
-import { statementActions, StatementEffect } from '../../../core/models/policy';
+import { Statement, statementActions, StatementEffect } from '../../../core/models/policy';
+import { StatementTable } from '../StatementTable/StatementTable';
 
 export class StatementStep extends Component<any, any> {
 
@@ -13,10 +14,27 @@ export class StatementStep extends Component<any, any> {
         this.state = {
             effect: true, // effect should be modified proper type before walk through props
             actions: [],
-            resource: '' // resource should be modified to string array before walk through props
+            resource: '', // resource should be modified to string array before walk through props
+            statements: []
         };
 
         this.handleResourceChange = this.handleResourceChange.bind(this);
+        this.handleAddStatement = this.handleAddStatement.bind(this);
+    }
+
+    handleAddStatement() {
+        const statement: Statement = {
+            effect: this.state.effect ? StatementEffect.Allow : StatementEffect.Deny,
+            action: this.state.actions,
+            resource: this.state.resource ? this.state.resource.split(',') : []
+        };
+        if (statement.effect && statement.action && statement.action.length && statement.resource && statement.resource.length) {
+            const statements = this.state.statements || [];
+            statements.push(statement);
+            this.setState({statements: statements});
+            // add statement and reset form
+            this.setState({effect: true, actions: [], resource: ''});
+        }
     }
 
     handleResourceChange(event: any) {
@@ -33,23 +51,12 @@ export class StatementStep extends Component<any, any> {
                     description of elements that you can use in statements.</p>
                 <div className="d-flex align-items-center control-box">
                     <label className="mr-3">Effect:</label>
-                    <InputSwitch checked={this.state.effect} onChange={
-                        (e: any) => {
-                            this.setState({effect: e.value});
-                            this.props.onEffectChange(e.value ? StatementEffect.Allow : StatementEffect.Deny);
-                        }
-                    }
-                    />
+                    <InputSwitch checked={this.state.effect} onChange={(e: any) => this.setState({effect: e.value})} />
                 </div>
 
                 <div className="d-flex align-items-center control-box">
                     <label className="mr-3">Actions:</label>
-                    <MultiSelect options={actions} value={this.state.actions} onChange={
-                        (e: any) => {
-                            this.setState({actions: e.value});
-                            this.props.onActionChange(e.value);
-                        }
-                    } />
+                    <MultiSelect options={actions} value={this.state.actions} onChange={(e: any) => this.setState({actions: e.value})} />
                 </div>
 
                 <div className="d-flex align-items-start control-box">
@@ -61,12 +68,11 @@ export class StatementStep extends Component<any, any> {
                     </div>
                 </div>
 
-                <Button type="button" className="mb-4 ml-5" label="Add StatementStep"/>
+                <Button type="button" className="mb-4 ml-5" label="Add StatementStep"
+                        onClick={this.handleAddStatement}
+                        disabled={!this.state.actions || !this.state.actions.length || !this.state.resource}/>
 
-                <div>
-                    <p className="small text-info">You added the following statements. Click the button below to
-                        Generate a policy.</p>
-                </div>
+                <StatementTable statements={this.state.statements} />
             </section>
         );
     }

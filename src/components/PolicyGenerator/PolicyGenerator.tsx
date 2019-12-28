@@ -12,7 +12,8 @@ export class PolicyGenerator extends Component<any, any> {
         this.state = {
             policy: '',
             effect: StatementEffect.Allow,
-            action: []
+            action: [],
+            resource: []
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -27,8 +28,7 @@ export class PolicyGenerator extends Component<any, any> {
             <form onSubmit={this.handleSubmit}>
                 <h1 className="my-5">Policy Manager</h1>
                 <PolicyTypeStep onPolicyChange={(e: string) => this.setState({policy: e})}/>
-                <StatementStep onEffectChange={(e: StatementEffect) => this.setState({effect: e})}
-                               onActionChange={(e: string[]) => this.setState({action: e})}/>
+                <StatementStep />
                 <GenerateStep/>
             </form>
         );
