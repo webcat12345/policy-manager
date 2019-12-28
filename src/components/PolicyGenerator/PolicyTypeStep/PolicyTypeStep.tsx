@@ -7,9 +7,9 @@ export class PolicyTypeStep extends Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            policy: ''
+            policy: PolicyType.Account
         };
-
+        this.props.onPolicyChange(this.state.policy);
         this.handlePolicyChange = this.handlePolicyChange.bind(this);
     }
 

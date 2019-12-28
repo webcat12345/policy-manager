@@ -28,7 +28,7 @@ export class PolicyGenerator extends Component<any, any> {
             <form onSubmit={this.handleSubmit}>
                 <h1 className="my-5">Policy Manager</h1>
                 <PolicyTypeStep onPolicyChange={(e: string) => this.setState({policy: e})}/>
-                <StatementStep />
+                <StatementStep policy={this.state.policy} />
                 <GenerateStep/>
             </form>
         );

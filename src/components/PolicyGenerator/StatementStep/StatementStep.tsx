@@ -43,7 +43,6 @@ export class StatementStep extends Component<any, any> {
     }
 
     render() {
-        const actions = statementActions().map(x => ({label: x, value: x}));
         return (
             <section className="mb-5">
                 <h4 className="mb-3">Step 2: Add Statements(s)</h4>
@@ -56,7 +55,7 @@ export class StatementStep extends Component<any, any> {
 
                 <div className="d-flex align-items-center control-box">
                     <label className="mr-3">Actions:</label>
-                    <MultiSelect options={actions} value={this.state.actions} onChange={(e: any) => this.setState({actions: e.value})} />
+                    <MultiSelect options={statementActions(this.props.policy).map(x => ({label: x, value: x}))} value={this.state.actions} onChange={(e: any) => this.setState({actions: e.value})} />
                 </div>
 
                 <div className="d-flex align-items-start control-box">
@@ -71,8 +70,9 @@ export class StatementStep extends Component<any, any> {
                 <Button type="button" className="mb-4 ml-5" label="Add StatementStep"
                         onClick={this.handleAddStatement}
                         disabled={!this.state.actions || !this.state.actions.length || !this.state.resource}/>
-
-                <StatementTable statements={this.state.statements} />
+                {
+                    (this.state.statements && this.state.statements.length)  ? <StatementTable statements={this.state.statements} /> : null
+                }
             </section>
         );
     }

@@ -27,12 +27,10 @@ export enum PolicyType {
     Properties = 'Properties'
 }
 
-export function statementActions(): string[] {
+export function statementActions(policy: PolicyType): string[] {
     const actions: string[] = [];
-    Object.keys(PolicyType).forEach(policy => {
-        Object.keys(StatementActionType).forEach(action => {
-            actions.push(`${policy.toLowerCase()}:${action.toLowerCase()}`);
-        });
+    Object.keys(StatementActionType).forEach(action => {
+        actions.push(`${policy.toLowerCase()}:${action.toLowerCase()}`);
     });
     return actions;
 }
