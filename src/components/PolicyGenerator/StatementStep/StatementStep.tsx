@@ -34,6 +34,7 @@ export class StatementStep extends Component<any, any> {
             this.setState({statements: statements});
             // add statement and reset form
             this.setState({effect: true, actions: [], resource: ''});
+            this.props.onStatementChange(statements);
         }
     }
 
