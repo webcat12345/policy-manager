@@ -13,11 +13,9 @@ export class StatementStep extends Component<any, any> {
         super(props);
         this.state = {
             effect: true, // effect should be modified proper type before walk through props
-            resource: '', // resource should be modified to string array before walk through props
             statements: []
         };
 
-        this.handleResourceChange = this.handleResourceChange.bind(this);
         this.handleAddStatement = this.handleAddStatement.bind(this);
     }
 
@@ -25,7 +23,7 @@ export class StatementStep extends Component<any, any> {
         const statement: Statement = {
             effect: this.state.effect ? StatementEffect.Allow : StatementEffect.Deny,
             action: this.props.actions,
-            resource: this.state.resource ? this.state.resource.split(',') : []
+            resource: this.props.resource ? this.props.resource.split(',') : []
         };
         if (statement.effect && statement.action && statement.action.length && statement.resource && statement.resource.length) {
             const statements = this.state.statements || [];
@@ -35,11 +33,6 @@ export class StatementStep extends Component<any, any> {
             this.setState({effect: true, actions: [], resource: ''});
             this.props.onStatementChange(statements);
         }
-    }
-
-    handleResourceChange(event: any) {
-        this.setState({resource: event.target.value});
-        // TODO: add regex expression to validate resource
     }
 
     render() {
@@ -62,7 +55,7 @@ export class StatementStep extends Component<any, any> {
                 <div className="d-flex align-items-start control-box">
                     <label className="mr-3 pt-1">Resources:</label>
                     <div className="input-wrapper">
-                        <InputText value={this.state.resource} onChange={this.handleResourceChange}/>
+                        <InputText value={this.props.resource} onChange={(e: any) => this.props.onResourceChange(e.target.value)}/>
                         <p className="small text-warning mt-2">Tip: ARN should follow the following format: arn:aws:sqs:
                             Use a comma to separate multiple values.</p>
                     </div>
@@ -70,7 +63,7 @@ export class StatementStep extends Component<any, any> {
 
                 <Button type="button" className="mb-4 ml-5" label="Add StatementStep"
                         onClick={this.handleAddStatement}
-                        disabled={!this.props.actions || !this.props.actions.length || !this.state.resource}/>
+                        disabled={!this.props.actions || !this.props.actions.length || !this.props.resource}/>
                 {
                     (this.state.statements && this.state.statements.length) ?
                         <StatementTable statements={this.state.statements}/> : null

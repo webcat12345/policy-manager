@@ -12,6 +12,7 @@ export class PolicyGenerator extends Component<any, any> {
         this.state = {
             policy: '',
             actions: [],
+            resource: '',
             statements: []
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,11 +32,12 @@ export class PolicyGenerator extends Component<any, any> {
             <form onSubmit={this.handleSubmit}>
                 <h1 className="my-5">Policy Manager</h1>
                 <PolicyTypeStep onPolicyChange={(e: string) => {
-                    this.setState({policy: e, actions: []});
+                    this.setState({policy: e, actions: [], resource: ''});
                 }}/>
-                <StatementStep policy={this.state.policy} actions={this.state.actions}
+                <StatementStep policy={this.state.policy} actions={this.state.actions} resource={this.state.resource}
                                onStatementChange={(e: Statement[]) => this.setState({statements: e})}
-                               onActionsChange={(e: string[]) => this.setState({actions: e})}/>
+                               onActionsChange={(e: string[]) => this.setState({actions: e})}
+                               onResourceChange={(e: string) => this.setState({resource: e})}/>
                 <GenerateStep statements={this.state.statements}/>
             </form>
         );
