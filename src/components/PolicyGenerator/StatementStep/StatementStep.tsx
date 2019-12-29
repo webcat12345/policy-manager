@@ -55,13 +55,13 @@ export class StatementStep extends Component<any, any> {
                 <div className="d-flex align-items-start control-box">
                     <label className="mr-3 pt-1">Resources:</label>
                     <div className="input-wrapper">
-                        <InputText value={this.props.resource} onChange={(e: any) => this.props.onResourceChange(e.target.value)}/>
+                        <InputText className="input-box-resource" value={this.props.resource} onChange={(e: any) => this.props.onResourceChange(e.target.value)}/>
                         <p className="small text-warning mt-2">Tip: ARN should follow the following format: arn:aws:sqs:
                             Use a comma to separate multiple values.</p>
                     </div>
                 </div>
 
-                <Button type="button" className="mb-4 ml-5" label="Add StatementStep"
+                <Button type="button" className="mb-4 ml-5 btn-add-statement" label="Add StatementStep"
                         onClick={this.handleAddStatement}
                         disabled={!this.props.actions || !this.props.actions.length || !this.props.resource}/>
                 {
