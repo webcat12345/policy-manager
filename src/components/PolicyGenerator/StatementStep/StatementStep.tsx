@@ -13,7 +13,6 @@ export class StatementStep extends Component<any, any> {
         super(props);
         this.state = {
             effect: true, // effect should be modified proper type before walk through props
-            actions: [],
             resource: '', // resource should be modified to string array before walk through props
             statements: []
         };
@@ -25,7 +24,7 @@ export class StatementStep extends Component<any, any> {
     handleAddStatement() {
         const statement: Statement = {
             effect: this.state.effect ? StatementEffect.Allow : StatementEffect.Deny,
-            action: this.state.actions,
+            action: this.props.actions,
             resource: this.state.resource ? this.state.resource.split(',') : []
         };
         if (statement.effect && statement.action && statement.action.length && statement.resource && statement.resource.length) {
@@ -57,7 +56,7 @@ export class StatementStep extends Component<any, any> {
                 <div className="d-flex align-items-center control-box">
                     <label className="mr-3">Actions:</label>
                     <MultiSelect options={statementActions(this.props.policy).map(x => ({label: x, value: x}))}
-                                 value={this.state.actions} onChange={(e: any) => this.setState({actions: e.value})}/>
+                                 value={this.props.actions} onChange={(e: any) => this.props.onActionsChange(e.value)}/>
                 </div>
 
                 <div className="d-flex align-items-start control-box">
@@ -71,7 +70,7 @@ export class StatementStep extends Component<any, any> {
 
                 <Button type="button" className="mb-4 ml-5" label="Add StatementStep"
                         onClick={this.handleAddStatement}
-                        disabled={!this.state.actions || !this.state.actions.length || !this.state.resource}/>
+                        disabled={!this.props.actions || !this.props.actions.length || !this.state.resource}/>
                 {
                     (this.state.statements && this.state.statements.length) ?
                         <StatementTable statements={this.state.statements}/> : null
